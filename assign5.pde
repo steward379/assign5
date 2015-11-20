@@ -7,11 +7,18 @@ int[] enemyY = new int[enemyCount];
 void setup () {
 	size(640, 480) ;
 	enemy = loadImage("img/enemy.png");
+	addEnemy(0);
 }
 
 void draw()
 {
-
+	background(0);
+	for (int i = 0; i < enemyCount; ++i) {
+		if (enemyX[i] != -1 || enemyY[i] != -1) {
+			image(enemy, enemyX[i], enemyY[i]);
+			enemyX[i]+=5;
+		}
+	}
 }
 
 // 0 - straight, 1-slope, 2-dimond
@@ -43,23 +50,20 @@ void addStraightEnemy()
 		enemyX[i] = (i+1)*-80;
 		enemyY[i] = h;
 	}
-
-	println("addStraightEnemy");
 }
 void addSlopeEnemy()
 {
-	float t = random(height - 40 * 5);
+	float t = random(height - enemy.height * 5);
 	int h = int(t);
 	for (int i = 0; i < 5; ++i) {
 
 		enemyX[i] = (i+1)*-80;
 		enemyY[i] = h + i * 40;
 	}
-	println("addSlopeEnemy");
 }
 void addDiamondEnemy()
 {
-	float t = random( 40 * 3 ,height - 40 * 3);
+	float t = random( enemy.height * 3 ,height - enemy.height * 3);
 	int h = int(t);
 	int x_axis = 1;
 	for (int i = 0; i < 8; ++i) {
@@ -86,5 +90,4 @@ void addDiamondEnemy()
 			x_axis++;
 		}
 	}
-	println("addDiamondEnemy");
 }
