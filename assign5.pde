@@ -198,7 +198,7 @@ void enemyChange(int state){
   if (enemyX[5] == -1 && enemyX[4] > width + 200){        
     enemyState = state;
     addEnemy(state);
-  }else if(enemyX[7] > width + 200){
+  }else if(enemyX[7] > width + 400){
     enemyState = state;
     addEnemy(state);
   }
@@ -225,6 +225,8 @@ int closeEnemy(int nowFighterX,int nowFighterY){
         dist(nowFighterX, nowFighterY, enemyX[g-1], enemyY[g-1])){
           closestEnemy = g;
         }
+      }else if (enemyX[5] == -1 && enemyX[4] > width || enemyX[7] > width){
+        closestEnemy = -1;
       }
     }    
     return closestEnemy;
@@ -295,6 +297,17 @@ void draw() {
       }
       if (attackX [i] < - attack.width){
             attackLimit[i] = false;
+      }
+    }
+    
+    //attack
+    for(int i = 0; i < 5;i++){
+      if(closestEnemy != -1){
+        if(enemyY[closestEnemy] > attackY[i]){
+          attackY[i] += 6;
+        }else if(enemyY[closestEnemy] < attackY[i]){
+          attackY[i] -= 6;
+        }
       }
     }
     
@@ -497,7 +510,6 @@ void keyReleased () {
 }
 
 void mousePressed (){
-
   if ( gameState == 0 
     && mouseX > 200 && mouseX < 460 && mouseY > 370 && mouseY < 420){
     if ( mouseButton == LEFT) {
@@ -518,3 +530,4 @@ void mousePressed (){
     }
   }
 }
+
