@@ -12,7 +12,7 @@ final int HP_PERCENT = 2;
 final int HP_MAX = 100 * HP_PERCENT;
 int timer;
 int current;
-int closestEnemy;
+int closestEnemyIndex;
 
 //states
 int gameState;
@@ -176,10 +176,10 @@ void draw(){
     //attack
     for(int i = 0; i < 5;i++){
       if(enemyX[0] > 0){
-        if(closestEnemy != -1 && enemyX[closestEnemy] < attackX[i]){
-          if(enemyY[closestEnemy] > attackY[i]){
+        if(closestEnemyIndex != -1 && enemyX[closestEnemyIndex] < attackX[i]){
+          if(enemyY[closestEnemyIndex] > attackY[i]){
             attackY[i] += 3;
-          }else if(enemyY[closestEnemy] < attackY[i]){
+          }else if(enemyY[closestEnemyIndex] < attackY[i]){
             attackY[i] -= 3;
           }  
         }
@@ -318,7 +318,7 @@ void draw(){
     
     fill(255);
     text("Score:" + scoreNum, 10, 470);       
-    text("Closest Enemy Index:" + closestEnemy, 100, 470);
+    text("Closest Enemy Index:" + closestEnemyIndex, 100, 470);
     
     break ;     
     
@@ -444,19 +444,20 @@ void dieReset(){
 int closestEnemy(int nowFighterX,int nowFighterY){
   float enemyDistance = 1000;
   if (enemyX[7] > width || enemyX [5] == -1 && enemyX[4] > width){
-    closestEnemy = -1;
+    closestEnemyIndex = -1;
   }else{    
     for( int g = 0; g < 8; g++ ){
       if ( enemyX[g] != -1 ) {        
         if( dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]) < enemyDistance){
           enemyDistance = dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]);
-          closestEnemy = g;
+          closestEnemyIndex = g;
         }
       }
     }  
   }  
-  return closestEnemy;
+  return closestEnemyIndex;
 }
+
 
 void keyPressed (){
    if (key == CODED){ 
@@ -519,15 +520,16 @@ void mousePressed (){
     } 
   } else if ( gameState == 2
     && mouseX > 200 && mouseX < 470 && mouseY > 300 && mouseY < 350){
-    if( mouseButton == LEFT ){
-      gameState = 1 ; 
-      enemyState = 0;
-      addEnemy(0);
-      for (int i = 0; i < 5; i++ ){
-        boomsPlace [i][0] = 1000;
-        boomsPlace [i][1] = 1000;
-        attackLimit[i] = false;       
+      if( mouseButton == LEFT ){
+        gameState = 1 ; 
+        enemyState = 0;
+        addEnemy(0);
+        for (int i = 0; i < 5; i++ ){
+          boomsPlace [i][0] = 1000;
+          boomsPlace [i][1] = 1000;
+          attackLimit[i] = false;       
+        }
       }
-    }
   }
 }
+
