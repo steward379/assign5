@@ -214,22 +214,21 @@ void dieReset(){
    scoreNum = 0;
 }
 
-
-int closeEnemy(int nowFighterX,int nowFighterY){  
-    for(int g = 0; g < 8 ; g++){
-       if(dist(nowFighterX, nowFighterY, enemyX[0], enemyY[0]) <
-      dist(nowFighterX, nowFighterY, enemyX[1], enemyY[1])){
-       closestEnemy = 0;
-      }else if (g != 0 && enemyX[g] != -1){
-        if(dist(nowFighterX, nowFighterY, enemyX[g], enemyY[g] ) <
-        dist(nowFighterX, nowFighterY, enemyX[g-1], enemyY[g-1])){
+int closeEnemy(int nowFighterX,int nowFighterY){
+  float enemyDistance = 1000;
+  if (enemyX[7] > width || enemyX [5] == -1 && enemyX[4] > width){
+    closestEnemy = -1;
+  }else{    
+    for( int g = 0; g < 8; g++ ){
+      if ( enemyX[g] != -1 ) {        
+        if( dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]) < enemyDistance){
+          enemyDistance = dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]);
           closestEnemy = g;
         }
-      }else if (enemyX[5] == -1 && enemyX[4] > width || enemyX[7] > width){
-        closestEnemy = -1;
       }
-    }    
-    return closestEnemy;
+    }  
+  }  
+  return closestEnemy;
 }
 
 void draw() { 
@@ -302,11 +301,13 @@ void draw() {
     
     //attack
     for(int i = 0; i < 5;i++){
-      if(closestEnemy != -1){
-        if(enemyY[closestEnemy] > attackY[i]){
-          attackY[i] += 6;
-        }else if(enemyY[closestEnemy] < attackY[i]){
-          attackY[i] -= 6;
+      if(enemyX[0] > 0){
+        if(closestEnemy != -1 && enemyX[closestEnemy] < attackX[i]){
+          if(enemyY[closestEnemy] > attackY[i]){
+            attackY[i] += 3;
+          }else if(enemyY[closestEnemy] < attackY[i]){
+            attackY[i] -= 3;
+          }  
         }
       }
     }
@@ -530,4 +531,3 @@ void mousePressed (){
     }
   }
 }
-
