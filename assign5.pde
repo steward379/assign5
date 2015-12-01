@@ -1,3 +1,4 @@
+//assign 5
 //setup & time
 PImage startPlain, startHover, endPlain, endHover, bgOne, bgTwo;
 PImage treasure, fighter, enemy, attack;
