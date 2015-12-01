@@ -1,5 +1,3 @@
-//assign 5
-//setup & time
 PImage startPlain, startHover, endPlain, endHover, bgOne, bgTwo;
 PImage treasure, fighter, enemy, attack;
 PImage [] booms = new PImage [5];
@@ -105,134 +103,8 @@ void setup () {
   addEnemy(0);
 }
 
-void drawEnemy(){  
-  for (int i = 0; i < enemyCount; ++i) {
-    if (enemyX[i] != -1 || enemyY[i] != -1) {
-      image(enemy, enemyX[i], enemyY[i]);
-      enemyX[i]+=5;
-    }
-  }
-}
 
-void addEnemy(int type)
-{  
-  for (int i = 0; i < enemyCount; ++i) {
-    enemyX[i] = -1;
-    enemyY[i] = -1;
-  }
-  switch (type) {
-    case 0:
-      addStraightEnemy();
-      break;
-    case 1:
-      addSlopeEnemy();
-      break;
-    case 2:
-      addDiamondEnemy();
-      break;
-  }
-}
-
-void addStraightEnemy()
-{
-  float t = random(height - enemy.height);
-  int h = int(t);
-  for (int i = 0; i < 5; ++i) {
-    enemyX[i] = (i+1)*-80;
-    enemyY[i] = h;
-  }
-}
-void addSlopeEnemy()
-{
-  float t = random(height - enemy.height * 5);
-  int h = int(t);
-  for (int i = 0; i < 5; ++i) {
-    enemyX[i] = (i+1)*-80;
-    enemyY[i] = h + i * 40;
-  }
-}
-void addDiamondEnemy(){
-  float t = random( enemy.height * 3 ,height - enemy.height * 3);
-  int h = int (t);
-  int x_axis = 1;
-  for (int i = 0; i < 8; ++ i) {
-    if (i == 0 || i == 7) {
-      enemyX [i] = x_axis * - 80;
-      enemyY [i] = h;
-      x_axis ++;
-    }
-    else if (i == 1 || i == 5){
-      enemyX [i] = x_axis * - 80;
-      enemyY [i] = h + 1 * 40;
-      enemyX [i+1] = x_axis * - 80;
-      enemyY [i+1] = h - 1 * 40;
-      i++;
-      x_axis++;
-    }
-    else {
-      enemyX [i] = x_axis * - 80;
-      enemyY [i] = h + 2 * 40;
-      enemyX [i+1] = x_axis * - 80;
-      enemyY [i+1] = h - 2 * 40;
-      i ++;
-      x_axis ++;
-    }
-  }
-}
-
-boolean isHit(float ax,float ay,float aw,float ah,float bx,float by,float bw,float bh){
-  if (ax >= bx - aw && ax <= bx + bw && ay >= by - ah && ay <= by + bh){
-  return true;
-  }
-  return false;  
-}
-
-void hpChange(int value){
-  hpBar += value * HP_PERCENT;
-}
-
-void scoreChange(int value){
-  scoreNum += value;
-}
-
-void enemyChange(int state){
-  if (enemyX[5] == -1 && enemyX[4] > width + 200){        
-    enemyState = state;
-    addEnemy(state);
-  }else if(enemyX[7] > width + 400){
-    enemyState = state;
-    addEnemy(state);
-  }
-}  
-
-void dieReset(){
-   gameState = 2 ;
-   hpBar = 20 * HP_PERCENT;
-   fighterX = FIGHTER_X_START;
-   fighterY = FIGHTER_Y_START;
-   treasureX = floor( random(50,600) );
-   treasureY = floor( random(50,420) );
-   scoreNum = 0;
-}
-
-int closestEnemy(int nowFighterX,int nowFighterY){
-  float enemyDistance = 1000;
-  if (enemyX[7] > width || enemyX [5] == -1 && enemyX[4] > width){
-    closestEnemy = -1;
-  }else{    
-    for( int g = 0; g < 8; g++ ){
-      if ( enemyX[g] != -1 ) {        
-        if( dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]) < enemyDistance){
-          enemyDistance = dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]);
-          closestEnemy = g;
-        }
-      }
-    }  
-  }  
-  return closestEnemy;
-}
-
-void draw() { 
+void draw(){ 
   background(0) ;   
   
   switch (gameState) {
@@ -458,6 +330,132 @@ void draw() {
   }  
 }
 
+void drawEnemy(){  
+  for (int i = 0; i < enemyCount; ++i) {
+    if (enemyX[i] != -1 || enemyY[i] != -1) {
+      image(enemy, enemyX[i], enemyY[i]);
+      enemyX[i]+=5;
+    }
+  }
+}
+
+void addEnemy(int type)
+{  
+  for (int i = 0; i < enemyCount; ++i) {
+    enemyX[i] = -1;
+    enemyY[i] = -1;
+  }
+  switch (type) {
+    case 0:
+      addStraightEnemy();
+      break;
+    case 1:
+      addSlopeEnemy();
+      break;
+    case 2:
+      addDiamondEnemy();
+      break;
+  }
+}
+
+void addStraightEnemy()
+{
+  float t = random(height - enemy.height);
+  int h = int(t);
+  for (int i = 0; i < 5; ++i) {
+    enemyX[i] = (i+1)*-80;
+    enemyY[i] = h;
+  }
+}
+void addSlopeEnemy()
+{
+  float t = random(height - enemy.height * 5);
+  int h = int(t);
+  for (int i = 0; i < 5; ++i) {
+    enemyX[i] = (i+1)*-80;
+    enemyY[i] = h + i * 40;
+  }
+}
+void addDiamondEnemy(){
+  float t = random( enemy.height * 3 ,height - enemy.height * 3);
+  int h = int (t);
+  int x_axis = 1;
+  for (int i = 0; i < 8; ++ i) {
+    if (i == 0 || i == 7) {
+      enemyX [i] = x_axis * - 80;
+      enemyY [i] = h;
+      x_axis ++;
+    }
+    else if (i == 1 || i == 5){
+      enemyX [i] = x_axis * - 80;
+      enemyY [i] = h + 1 * 40;
+      enemyX [i+1] = x_axis * - 80;
+      enemyY [i+1] = h - 1 * 40;
+      i++;
+      x_axis++;
+    }
+    else {
+      enemyX [i] = x_axis * - 80;
+      enemyY [i] = h + 2 * 40;
+      enemyX [i+1] = x_axis * - 80;
+      enemyY [i+1] = h - 2 * 40;
+      i ++;
+      x_axis ++;
+    }
+  }
+}
+
+boolean isHit(float ax,float ay,float aw,float ah,float bx,float by,float bw,float bh){
+  if (ax >= bx - aw && ax <= bx + bw && ay >= by - ah && ay <= by + bh){
+  return true;
+  }
+  return false;  
+}
+
+void hpChange(int value){
+  hpBar += value * HP_PERCENT;
+}
+
+void scoreChange(int value){
+  scoreNum += value;
+}
+
+void enemyChange(int state){
+  if (enemyX[5] == -1 && enemyX[4] > width + 200){        
+    enemyState = state;
+    addEnemy(state);
+  }else if(enemyX[7] > width + 400){
+    enemyState = state;
+    addEnemy(state);
+  }
+}  
+
+void dieReset(){
+   gameState = 2 ;
+   hpBar = 20 * HP_PERCENT;
+   fighterX = FIGHTER_X_START;
+   fighterY = FIGHTER_Y_START;
+   treasureX = floor( random(50,600) );
+   treasureY = floor( random(50,420) );
+   scoreNum = 0;
+}
+
+int closestEnemy(int nowFighterX,int nowFighterY){
+  float enemyDistance = 1000;
+  if (enemyX[7] > width || enemyX [5] == -1 && enemyX[4] > width){
+    closestEnemy = -1;
+  }else{    
+    for( int g = 0; g < 8; g++ ){
+      if ( enemyX[g] != -1 ) {        
+        if( dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]) < enemyDistance){
+          enemyDistance = dist(nowFighterX, nowFighterY, enemyX [g], enemyY [g]);
+          closestEnemy = g;
+        }
+      }
+    }  
+  }  
+  return closestEnemy;
+}
 
 void keyPressed (){
    if (key == CODED){ 
