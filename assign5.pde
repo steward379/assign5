@@ -444,7 +444,7 @@ void draw() {
     
     fill(255);
     text("Score:" + scoreNum, 10, 470);       
-    text("Closest Enemy Index:" + closestEnemy, 80, 470);
+    text("Closest Enemy Index:" + closestEnemy, 100, 470);
     
     break ;     
     
