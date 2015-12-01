@@ -214,7 +214,7 @@ void dieReset(){
    scoreNum = 0;
 }
 
-int closeEnemy(int nowFighterX,int nowFighterY){
+int closestEnemy(int nowFighterX,int nowFighterY){
   float enemyDistance = 1000;
   if (enemyX[7] > width || enemyX [5] == -1 && enemyX[4] > width){
     closestEnemy = -1;
@@ -440,7 +440,7 @@ void draw() {
             }
         }  
         
-    closeEnemy(fighterX, fighterY);
+    closestEnemy(fighterX, fighterY);
     
     fill(255);
     text("Score:" + scoreNum, 10, 470);       
