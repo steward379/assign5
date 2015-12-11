@@ -173,10 +173,10 @@ void draw(){
       }
     }
     
-    //attack
+    //attack // speed up, bugs fixed, loose scope //
     for(int i = 0; i < 5;i++){
       if(enemyX[0] > 0){
-        if(closestEnemyIndex != -1 && enemyX[closestEnemyIndex] < attackX[i]){
+        if(closestEnemyIndex != -1 && enemyX[closestEnemyIndex] < attackX[i]  + 200){
           if(enemyY[closestEnemyIndex] > attackY[i] && enemyY[closestEnemyIndex] != -1000){
             attackY[i] += 5;
           }else if(enemyY[closestEnemyIndex] < attackY[i] && enemyY[closestEnemyIndex] != -1000){
